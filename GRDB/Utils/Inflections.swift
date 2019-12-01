@@ -201,7 +201,7 @@ public struct Inflections {
             let result = NSMutableString(string: string)
             let matchCount = reg.replaceMatches(in: result, options: [], range: range, withTemplate: template)
             if matchCount > 0 {
-                return String(result)
+                return result as String
             }
         }
         return string
