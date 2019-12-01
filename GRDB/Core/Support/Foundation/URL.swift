@@ -1,13 +1,16 @@
 import Foundation
 
-#if !os(Linux)
 /// NSURL stores its absoluteString in the database.
 extension NSURL: DatabaseValueConvertible {
     
     /// Returns a value that can be stored in the database.
     /// (the URL's absoluteString).
     public var databaseValue: DatabaseValue {
+#if os(Linux)
+        return absoluteString.databaseValue
+#else
         return absoluteString?.databaseValue ?? .null
+#endif
     }
     
     /// Returns an NSURL initialized from *dbValue*, if possible.
@@ -18,7 +21,6 @@ extension NSURL: DatabaseValueConvertible {
         return cast(URL(string: string))
     }
 }
-#endif
 
 /// URL stores its absoluteString in the database.
 extension URL: DatabaseValueConvertible { }
